@@ -25,11 +25,11 @@ jobs:
 
       - name: Build backend image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/ums-backend:latest ./backend
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ums-backend-git:latest ./ums-backend
 
       - name: Push backend image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/ums-backend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/ums-backend-git:latest
 
 
   build-frontend:
@@ -49,9 +49,9 @@ jobs:
 
       - name: Build frontend image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/ums-frontend:latest ./frontend
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ums-frontend-git:latest ./ums-frontend
 
       - name: Push frontend image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/ums-frontend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/ums-frontend-git:latest
 
