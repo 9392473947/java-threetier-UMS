@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: umsbackenddeploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: umsbackenddeploy
+  template:
+    metadata:
+      labels:
+        app: umsbackenddeploy
+    spec:
+      containers:
+      - name: umsbackendcon
+        image: reddychaithanya06/ums-backend
+        ports:
+        - containerPort: 8081
+

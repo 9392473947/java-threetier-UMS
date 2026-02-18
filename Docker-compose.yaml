@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+
+  backend:
+    image: optimizedbackendums
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  frontend:
+    image: optimizedfrontendums
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    depends_on:
+      - backend
+

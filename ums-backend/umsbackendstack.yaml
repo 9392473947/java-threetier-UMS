@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+
+  backend:
+    image: optimizedbackendums
+    ports:
+      - "8080:8080"
+    networks:
+      - backend-net
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+networks:
+  backend-net:
+    driver: overlay
+
