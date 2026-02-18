@@ -10,7 +10,6 @@ jobs:
   build-backend:
     name: Build Backend Image
     runs-on: ubuntu-latest
-    environment: Docker_cred
 
     steps:
 
