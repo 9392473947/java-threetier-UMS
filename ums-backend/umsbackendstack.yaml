@@ -5,7 +5,8 @@ services:
   backend:
     image: optimizedbackendums
     security_opt:
-    - no-new-privileges:true
+      - no-new-privileges:true
+    read_only: true
     ports:
       - "8080:8080"
     networks:
