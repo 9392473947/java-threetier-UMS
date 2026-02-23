@@ -12,10 +12,8 @@ spec:
       labels:
         app: umsbackenddeploy
     spec:
-      template:
-        spec:
-          securityContext:
-            runAsNonRoot: true
+      securityContext:
+        runAsNonRoot: true
       containers:
       - name: umsbackendcon
         image: reddychaithanya06/ums-backend
