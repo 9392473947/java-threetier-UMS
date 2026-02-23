@@ -77,11 +77,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - uses: docker/build-push-action@v5
-        with:
-          context: ./ums-backend
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/ums-backend-git:latest
+      - name: Build backend image
+        run: docker build -t reddychaithanya06/local-ums-backend-git:latest ./ums-backend
+
+      - name: Push backend image
+        run: docker push reddychaithanya06/local-ums-backend-git:latest
 
 # ===============================
 # 5️⃣ BUILD FRONTEND IMAGE
@@ -101,11 +101,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - uses: docker/build-push-action@v5
-        with:
-          context: ./ums-frontend
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/ums-frontend-git:latest
+      - name: Build frontend image
+        run: docker build -t reddychaithanya06/local-ums-frontend-git:latest ./ums-frontend
+
+      - name: Push frontend image
+        run: docker push reddychaithanya06/local-ums-frontend-git:latest
 
 # ===============================
 # 6️⃣ TRIVY CONTAINER SCAN
