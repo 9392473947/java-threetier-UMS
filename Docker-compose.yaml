@@ -6,6 +6,7 @@ services:
     image: optimizedbackendums
     security_opt:
       - no-new-privileges:true
+    read_only: true
     ports:
       - "8080:8080"
     restart: unless-stopped
@@ -18,6 +19,7 @@ services:
     image: optimizedfrontendums
     security_opt:
       - no-new-privileges:true
+    read_only: true
     ports:
       - "80:80"
     restart: unless-stopped
