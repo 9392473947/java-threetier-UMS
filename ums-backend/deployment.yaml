@@ -15,6 +15,8 @@ spec:
       containers:
       - name: umsbackendcon
         image: reddychaithanya06/ums-backend
+        securityContext:
+            allowPrivilegeEscalation: false
         ports:
         - containerPort: 8081
 
