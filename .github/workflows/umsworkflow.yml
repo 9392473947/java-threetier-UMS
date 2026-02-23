@@ -119,14 +119,14 @@ jobs:
       - name: Scan Backend Image
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ secrets.DOCKER_USERNAME }}/ums-backend-git:latest
+          image-ref: reddychaithanya06/local-ums-backend-git:latest
           format: table
           exit-code: 0
 
       - name: Scan Frontend Image
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ secrets.DOCKER_USERNAME }}/ums-frontend-git:latest
+          image-ref: reddychaithanya06/local-ums-frontend-git:latest
           format: table
           exit-code: 0
  
