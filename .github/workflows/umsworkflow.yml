@@ -17,10 +17,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run Semgrep
-        uses: returntocorp/semgrep-action@v1
+      - name: Run Semgrep and Generate SARIF
+        run: |
+          docker run --rm -v "$(pwd):/src" returntocorp/semgrep \
+            semgrep --config p/default --sarif --output semgrep-report.sarif
+
+      - name: Upload Semgrep Report
+        uses: actions/upload-artifact@v4
         with:
-          config: "p/default"
+          name: semgrep-report
+          path: semgrep-report.sarif
 
 # ===============================
 # 2️⃣ SCA - SNYK
@@ -38,8 +44,14 @@ jobs:
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
-      - name: Run Snyk Test
-        run: snyk test --all-projects || true
+      - name: Run Snyk and Generate JSON
+        run: snyk test --all-projects --json > snyk-report.json || true
+
+      - name: Upload Snyk Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: snyk-report
+          path: snyk-report.json
 
 # ===============================
 # 3️⃣ IaC SCAN - TRIVY
@@ -51,13 +63,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run Trivy IaC Scan
-        uses: aquasecurity/trivy-action@master
+      - name: Run Trivy IaC JSON Report
+        run: |
+          docker run --rm -v "$(pwd):/src" aquasec/trivy config \
+            --format json -o trivy-iac-report.json /src
+
+      - name: Upload Trivy IaC Report
+        uses: actions/upload-artifact@v4
         with:
-          scan-type: config
-          scan-ref: .
-          format: table
-          exit-code: 0
+          name: trivy-iac-report
+          path: trivy-iac-report.json
 
 # ===============================
 # 4️⃣ BUILD BACKEND IMAGE
@@ -117,16 +132,22 @@ jobs:
 
     steps:
       - name: Scan Backend Image
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: reddychaithanya06/local-ums-backend-git:latest
-          format: table
-          exit-code: 0
+        run: |
+          docker run --rm aquasec/trivy image \
+            --format json -o trivy-backend-report.json \
+            reddychaithanya06/local-ums-backend-git:latest
 
       - name: Scan Frontend Image
-        uses: aquasecurity/trivy-action@master
+        run: |
+          docker run --rm aquasec/trivy image \
+            --format json -o trivy-frontend-report.json \
+            reddychaithanya06/local-ums-frontend-git:latest
+
+      - name: Upload Trivy Image Reports
+        uses: actions/upload-artifact@v4
         with:
-          image-ref: reddychaithanya06/local-ums-frontend-git:latest
-          format: table
-          exit-code: 0
+          name: trivy-image-reports
+          path: |
+            trivy-backend-report.json
+            trivy-frontend-report.json
  
