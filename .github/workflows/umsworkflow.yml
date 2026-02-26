@@ -53,26 +53,6 @@ jobs:
           name: snyk-report
           path: snyk-report.json
 
-# ===============================
-# 3️⃣ IaC SCAN - TRIVY
-# ===============================
-  trivy-iac:
-    name: Trivy IaC Scan
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run Trivy IaC JSON Report
-        run: |
-          docker run --rm -v "$(pwd):/workspace" -w /workspace aquasec/trivy config \
-            --format json -o trivy-iac-report.json /src
-
-      - name: Upload Trivy IaC Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: trivy-iac-report
-          path: trivy-iac-report.json
 
 # ===============================
 # 4️⃣ BUILD BACKEND IMAGE
