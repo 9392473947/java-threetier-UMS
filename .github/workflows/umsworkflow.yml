@@ -83,7 +83,7 @@ jobs:
 # ===============================
   build-frontend:
     name: Build Frontend
-    needs: [semgrep-scan, snyk-scan, trivy-iac]
+    needs: [semgrep-scan, snyk-scan]
     runs-on: ubuntu-latest
 
     steps:
