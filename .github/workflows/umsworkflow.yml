@@ -59,7 +59,7 @@ jobs:
 # ===============================
   build-backend:
     name: Build Backend
-    needs: [semgrep-scan, snyk-scan, trivy-iac]
+    needs: [semgrep-scan, snyk-scan]
     runs-on: ubuntu-latest
 
     steps:
